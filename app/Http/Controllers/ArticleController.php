@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -25,7 +26,8 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('articles.create', compact('categories'));
     }
 
     /**
@@ -36,7 +38,21 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'articlecategory' => 'required',
+            'title' => 'required|min:3',
+            'description' => 'required|min:5',
+            'content' => 'required|min:10',
+        ]);
+
+        Article::create([
+            'category_id' => $request->articlecategory,
+            'title' => $request->title,
+            'description' => $request->description,
+            'content' => $request->content
+        ]);
+
+        return redirect(route('articles.index'))->with('message', 'New article inserted succesfully');
     }
 
     /**
