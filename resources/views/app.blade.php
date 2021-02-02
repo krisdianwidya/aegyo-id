@@ -40,12 +40,12 @@
 
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
+            <li class="nav-item" id="category-link">
                 <a class="nav-link" href="{{ route('categories.index') }}">
                     <span>Category</span></a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item" id="article-link">
                 <a class="nav-link" href="{{ route('articles.index') }}">
                     <span>Article</span></a>
             </li>
@@ -123,6 +123,15 @@
 
     @yield('script')
 
+    <script type="text/javascript">
+        let pathArray = window.location.pathname.split('/');
+
+        if (pathArray[1] === 'categories') {
+            $('#category-link').toggleClass('active');
+        } else if (pathArray[1] === 'articles') {
+            $('#article-link').toggleClass('active');
+        }
+    </script>
 </body>
 
 </html>
