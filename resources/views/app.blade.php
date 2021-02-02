@@ -40,13 +40,13 @@
 
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('categories.index') }}">
                     <span>Category</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('articles.index') }}">
                     <span>Article</span></a>
             </li>
 

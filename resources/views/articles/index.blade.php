@@ -8,7 +8,7 @@
         <i class="fa fa-bars"></i>
     </button>
 
-    <p class="mt-2">Manage Categories Data</p>
+    <p class="mt-2">Manage Articles Data</p>
 
 
 </nav>
@@ -29,13 +29,13 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header d-flex py-3 justify-content-between">
-        <h6 class="m-0 d-inline font-weight-bold text-primary">Categories Table</h6>
+        <h6 class="m-0 d-inline font-weight-bold text-primary">Articles Table</h6>
 
-        <a href="{{ route('categories.create') }}" class="btn btn-success btn-icon-split">
+        <a href="{{ route('articles.create') }}" class="btn btn-success btn-icon-split">
             <span class="icon text-white-50">
                 +
             </span>
-            <span class="text">Add category</span>
+            <span class="text">Add article</span>
         </a>
     </div>
     <div class="card-body">
@@ -43,28 +43,34 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Article's category</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Content</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($categories as $category)
+                    @foreach($articles as $article)
                     <tr>
-                        <td>{{ strtoupper($category->name) }}</td>
+                        <td>{{ strtoupper($article->category->name) }}</td>
+                        <td>{{ $article->title }}</td>
+                        <td>{{ $article->description }}</td>
+                        <td>{{ $article->content }}</td>
                         <td>
-                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-primary btn-icon-split">
+                            <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-primary btn-icon-split">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-edit"></i>
                                 </span>
                                 <span class="text">Edit</span>
                             </a>
 
-                            <button class="btn btn-danger btn-icon-split btn-modalDel" data-toggle="modal" data-target="#deleteModal" data-id="{{ $category->id }}">
+                            <button class="btn btn-danger btn-icon-split btn-modalDel" data-toggle="modal" data-target="#deleteModal" data-id="{{ $article->id }}">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-trash"></i>
                                 </span>
                                 <span class="text">Delete</span>
-                                <form style="display:none" action="{{ route('categories.destroy',$category->id) }}" id="{{ 'form-delete-'.$category->id }}" method="post">
+                                <form style="display:none" action="{{ route('articles.destroy',$article->id) }}" id="{{ 'form-delete-'.$article->id }}" method="post">
                                     @csrf
                                     @method('DELETE')
                                 </form>
@@ -108,10 +114,10 @@
 <script type="text/javascript">
     document.addEventListener('click', e => {
         if (e.target.parentElement.classList.contains('btn-modalDel')) {
-            const categoryId = e.target.parentElement.dataset.id;
+            const articleId = e.target.parentElement.dataset.id;
 
             $('#btn-del').on('click', () => {
-                $(`#form-delete-${categoryId}`).submit();
+                $(`#form-delete-${articleId}`).submit();
             });
         }
     });
