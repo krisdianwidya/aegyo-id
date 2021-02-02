@@ -1,7 +1,17 @@
 // Call the dataTables jQuery plugin
 $(document).ready(function () {
-  $('#dataTable').DataTable({
+  $('#dataTableCategories').DataTable({
     columns: [
+      null,
+      { orderable: false }
+    ]
+  });
+
+  $('#dataTableArticles').DataTable({
+    columns: [
+      null,
+      null,
+      null,
       null,
       { orderable: false }
     ]
