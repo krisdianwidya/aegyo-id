@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    Route::get('/categories', [CategoryController::class, 'index']);
-});
+Route::redirect('/', '/categories');
 
 Route::resource('categories', CategoryController::class);
 Route::resource('article', ArticleController::class);

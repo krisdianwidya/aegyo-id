@@ -3,12 +3,28 @@
 @section('content')
 <!-- Page Heading -->
 
-<p class="my-4">Manage</p>
+@if (session('message'))
+<div class="mt-4 alert alert-success alert-dismissible fade show">
+    {{ session('message') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
+
+<p class="my-4">Manage Categories Data</p>
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Categories Table</h6>
+    <div class="card-header d-flex py-3 justify-content-between">
+        <h6 class="m-0 d-inline font-weight-bold text-primary">Categories Table</h6>
+
+        <a href="{{ route('categories.create') }}" class="btn btn-success btn-icon-split">
+            <span class="icon text-white-50">
+                +
+            </span>
+            <span class="text">Add category</span>
+        </a>
     </div>
     <div class="card-body">
         <div class="table-responsive">

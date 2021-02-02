@@ -25,7 +25,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
     /**
@@ -36,7 +36,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'category' => 'required|min:3',
+        ]);
+
+        Category::create([
+            'name' => $request->category
+        ]);
+
+        return redirect(route('categories.index'))->with('message', 'New category inserted succesfully');
     }
 
     /**
