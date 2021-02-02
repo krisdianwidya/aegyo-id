@@ -40,7 +40,7 @@
                     <tr>
                         <td>{{ strtoupper($category->name) }}</td>
                         <td>
-                            <a href="#" class="btn btn-primary btn-icon-split">
+                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-primary btn-icon-split">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-edit"></i>
                                 </span>

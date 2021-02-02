@@ -64,9 +64,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        return view('categories.edit', compact('category'));
     }
 
     /**
@@ -76,9 +76,17 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $this->validate($request, [
+            'category' => 'required|min:3',
+        ]);
+
+        $category->update([
+            'name' => $request->category
+        ]);
+
+        return redirect(route('categories.index'))->with('message', 'Category updated succesfully');
     }
 
     /**
