@@ -41,8 +41,6 @@
                 @enderror
             </div>
 
-
-
             <div class="input mb-3">
                 <textarea type="text" name="content" id="input-article" class="form-control  @error('content') is-invalid @enderror" rows="6" placeholder="Write content here..">{{ old('title') }}</textarea>
                 @error('content')
@@ -53,7 +51,6 @@
             </div>
 
             <button type="submit" class="btn btn-success">Insert</button>
-
         </form>
     </div>
 </div>

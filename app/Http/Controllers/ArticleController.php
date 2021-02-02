@@ -72,9 +72,10 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Article $article)
     {
-        //
+        $categories = Category::all();
+        return view('articles.edit', compact('article', 'categories'));
     }
 
     /**
@@ -84,9 +85,23 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Article $article)
     {
-        //
+        $this->validate($request, [
+            'articlecategory' => 'required',
+            'title' => 'required|min:3',
+            'description' => 'required|min:5',
+            'content' => 'required|min:10',
+        ]);
+
+        $article->update([
+            'category_id' => $request->articlecategory,
+            'title' => $request->title,
+            'description' => $request->description,
+            'content' => $request->content
+        ]);
+
+        return redirect(route('articles.index'))->with('message', 'Article updated succesfully');
     }
 
     /**
