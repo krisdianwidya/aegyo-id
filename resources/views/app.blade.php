@@ -67,6 +67,8 @@
             <!-- Main Content -->
             <div id="content">
 
+                @yield('nav')
+
 
 
                 <!-- Begin Page Content -->
@@ -118,6 +120,8 @@
 
     <!-- Page level custom scripts -->
     <script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
+
+    @yield('script')
 
 </body>
 

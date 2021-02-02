@@ -1,5 +1,19 @@
 @extends('app')
 
+@section('nav')
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+    <!-- Sidebar Toggle (Topbar) -->
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+        <i class="fa fa-bars"></i>
+    </button>
+
+    <p class="mt-2">Manage Categories Data</p>
+
+
+</nav>
+@endsection
+
 @section('content')
 <!-- Page Heading -->
 
@@ -11,8 +25,6 @@
     </button>
 </div>
 @endif
-
-<p class="my-4">Manage Categories Data</p>
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
@@ -47,12 +59,16 @@
                                 <span class="text">Edit</span>
                             </a>
 
-                            <a href="#" class="btn btn-danger btn-icon-split">
+                            <button class="btn btn-danger btn-icon-split btn-modalDel" data-toggle="modal" data-target="#deleteModal" data-id="{{ $category->id }}">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-trash"></i>
                                 </span>
                                 <span class="text">Delete</span>
-                            </a>
+                                <form style="display:none" action="{{ route('categories.destroy',$category->id) }}" id="{{ 'form-delete-'.$category->id }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                            </button>
                         </td>
                     </tr>
                     @endforeach
@@ -61,4 +77,44 @@
         </div>
     </div>
 </div>
+
+<!-- deleteModal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <span style="font-size: 6em; color: Red;">
+                    <i class="fas fa-times-circle"></i>
+                </span>
+
+                <h4 class="mb-3">Are you sure?</h4>
+                <p>Do you really want to delete these records? This process cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" id="btn-del">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('script')
+<script type="text/javascript">
+    document.addEventListener('click', e => {
+        e.preventDefault();
+        if (e.target.parentElement.classList.contains('btn-modalDel')) {
+            const categoryId = e.target.parentElement.dataset.id;
+
+            $('#btn-del').on('click', () => {
+                $(`#form-delete-${categoryId}`).submit();
+            });
+        }
+    });
+</script>
 @endsection
