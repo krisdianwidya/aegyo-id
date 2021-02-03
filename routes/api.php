@@ -23,3 +23,4 @@ Route::delete('/categories/{category}', [ApiCategoryController::class, 'destroy'
 Route::get('/articles', [ApiArticleController::class, 'index']);
 Route::post('/articles', [ApiArticleController::class, 'store']);
 Route::put('/articles/{article}', [ApiArticleController::class, 'update']);
+Route::delete('/articles/{article}', [ApiArticleController::class, 'destroy']);

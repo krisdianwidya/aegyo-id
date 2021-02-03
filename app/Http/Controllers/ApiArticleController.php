@@ -41,4 +41,11 @@ class ApiArticleController extends Controller
 
         return response()->json(['message' => 'Article updated succesfully'], 200);
     }
+
+    public function destroy(Article $article)
+    {
+        $this->deleteArticle($article);
+
+        return response()->json(['message' => 'Article deleted succesfully'], 200);
+    }
 }

@@ -33,8 +33,8 @@ trait ManageArticle
         ]);
     }
 
-    // public function deleteCategory(Category $category)
-    // {
-    //     $category->delete();
-    // }
+    public function deleteArticle(Article $article)
+    {
+        $article->delete();
+    }
 }
