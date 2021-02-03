@@ -25,4 +25,9 @@ trait ManageCategory
             'name' => $request->category
         ]);
     }
+
+    public function deleteCategory(Category $category)
+    {
+        $category->delete();
+    }
 }

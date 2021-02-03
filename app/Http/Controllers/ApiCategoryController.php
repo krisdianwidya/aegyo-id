@@ -42,4 +42,11 @@ class ApiCategoryController extends Controller
 
         return response()->json(['message' => 'Category updated succesfully'], 200);
     }
+
+    public function destroy(Category $category)
+    {
+        $this->deleteCategory($category);
+
+        return response()->json(['message' => 'Category deleted succesfully'], 200);
+    }
 }

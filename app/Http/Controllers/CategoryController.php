@@ -102,7 +102,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+        $this->deleteCategory($category);
 
         return redirect(route('categories.index'))->with('message', 'Category deleted succesfully');
     }

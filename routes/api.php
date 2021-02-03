@@ -18,3 +18,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/categories', [ApiCategoryController::class, 'index']);
 Route::post('/categories', [ApiCategoryController::class, 'store']);
 Route::put('/categories/{category}', [ApiCategoryController::class, 'update']);
+Route::delete('/categories/{category}', [ApiCategoryController::class, 'destroy']);
