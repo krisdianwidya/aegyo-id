@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Traits\ArticleValidation;
+use App\Traits\ManageCategory;
+
 
 class ArticleController extends Controller
 {
+    use ArticleValidation;
+    use ManageCategory;
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +31,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = $this->getAllCategories();
         return view('articles.create', compact('categories'));
     }
 
@@ -38,12 +43,12 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'articlecategory' => 'required',
-            'title' => 'required|min:3',
-            'description' => 'required|min:5',
-            'content' => 'required|min:10',
-        ]);
+        $validator = $this->validateArticle($request);
+        if ($validator->fails()) {
+            return redirect('articles/create')
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         Article::create([
             'category_id' => $request->articlecategory,
@@ -77,7 +82,6 @@ class ArticleController extends Controller
         $categories = Category::all();
         return view('articles.edit', compact('article', 'categories'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -87,12 +91,12 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        $this->validate($request, [
-            'articlecategory' => 'required',
-            'title' => 'required|min:3',
-            'description' => 'required|min:5',
-            'content' => 'required|min:10',
-        ]);
+        $validator = $this->validateArticle($request);
+        if ($validator->fails()) {
+            return redirect('articles/' . $article->id . '/edit')
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         $article->update([
             'category_id' => $request->articlecategory,
