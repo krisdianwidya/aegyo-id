@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -34,11 +36,17 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $this->validate($request, [
-            'category' => 'required|min:3',
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'category' => 'required|min:3'
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return redirect('categories/create')
+        //         ->withErrors($validator)
+        //         ->withInput();
+        // }
 
         Category::create([
             'name' => $request->category
@@ -76,12 +84,8 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
-        $this->validate($request, [
-            'category' => 'required|min:3',
-        ]);
-
         $category->update([
             'name' => $request->category
         ]);
