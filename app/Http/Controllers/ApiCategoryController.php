@@ -28,9 +28,7 @@ class ApiCategoryController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        Category::create([
-            'name' => $request->category
-        ]);
+        $this->insertNewCategory($request);
 
         return response()->json(['message' => 'New category inserted succesfully'], 200);
     }

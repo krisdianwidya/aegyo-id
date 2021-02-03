@@ -6,10 +6,12 @@ use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Traits\CategoryValidation;
 use App\Traits\ManageCategory;
 
 class CategoryController extends Controller
 {
+    use CategoryValidation;
     use ManageCategory;
     /**
      * Display a listing of the resource.
@@ -38,11 +40,15 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store(Request $request)
     {
-        Category::create([
-            'name' => $request->category
-        ]);
+        $validator = $this->validateCategory($request);
+        if ($validator->fails()) {
+            return redirect('categories/create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $this->insertNewCategory($request);
 
         return redirect(route('categories.index'))->with('message', 'New category inserted succesfully');
     }
