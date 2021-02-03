@@ -4,7 +4,6 @@ namespace App\Traits;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
-use App\Traits\ArticleValidation;
 
 
 trait ManageArticle
@@ -24,12 +23,15 @@ trait ManageArticle
         ]);
     }
 
-    // public function updateCategory(Request $request, Category $category)
-    // {
-    //     $category->update([
-    //         'name' => $request->category
-    //     ]);
-    // }
+    public function updateArticle(Request $request, Article $article)
+    {
+        $article->update([
+            'category_id' => $request->articlecategory,
+            'title' => $request->title,
+            'description' => $request->description,
+            'content' => $request->content
+        ]);
+    }
 
     // public function deleteCategory(Category $category)
     // {

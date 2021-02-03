@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
-use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Traits\ArticleValidation;
 use App\Traits\ManageArticle;
@@ -21,7 +20,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::all();
+        $articles = $this->getAllArticles();
         return view('articles.index', compact('articles'));
     }
 
@@ -75,7 +74,7 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        $categories = Category::all();
+        $categories = $this->getAllCategories();
         return view('articles.edit', compact('article', 'categories'));
     }
     /**
@@ -94,12 +93,7 @@ class ArticleController extends Controller
                 ->withInput();
         }
 
-        $article->update([
-            'category_id' => $request->articlecategory,
-            'title' => $request->title,
-            'description' => $request->description,
-            'content' => $request->content
-        ]);
+        $this->updateArticle($request, $article);
 
         return redirect(route('articles.index'))->with('message', 'Article updated succesfully');
     }
