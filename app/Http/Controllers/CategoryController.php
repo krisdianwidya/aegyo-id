@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Traits\CategoryValidation;
 use App\Traits\ManageCategory;
 
@@ -82,8 +80,15 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, Category $category)
+    public function update(Request $request, Category $category)
     {
+        $validator = $this->validateCategory($request);
+        if ($validator->fails()) {
+            return redirect('categories/' . $category->id . '/edit')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $category->update([
             'name' => $request->category
         ]);
