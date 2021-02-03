@@ -16,4 +16,16 @@ class ApiArticleController extends Controller
         $articles = $this->getAllArticles();
         return response()->json($articles, 200);
     }
+
+    public function store(Request $request)
+    {
+        $validator = $this->validateArticle($request);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $this->insertNewArticle($request);
+
+        return response()->json(['message' => 'New article inserted succesfully'], 200);
+    }
 }

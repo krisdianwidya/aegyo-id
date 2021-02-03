@@ -21,3 +21,4 @@ Route::put('/categories/{category}', [ApiCategoryController::class, 'update']);
 Route::delete('/categories/{category}', [ApiCategoryController::class, 'destroy']);
 
 Route::get('/articles', [ApiArticleController::class, 'index']);
+Route::post('/articles', [ApiArticleController::class, 'store']);

@@ -14,12 +14,15 @@ trait ManageArticle
         return Article::all();
     }
 
-    // public function insertNewCategory(Request $request)
-    // {
-    //     Category::create([
-    //         'name' => $request->category
-    //     ]);
-    // }
+    public function insertNewArticle(Request $request)
+    {
+        Article::create([
+            'category_id' => $request->articlecategory,
+            'title' => $request->title,
+            'description' => $request->description,
+            'content' => $request->content
+        ]);
+    }
 
     // public function updateCategory(Request $request, Category $category)
     // {

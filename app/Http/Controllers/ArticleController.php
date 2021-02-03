@@ -6,13 +6,14 @@ use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Traits\ArticleValidation;
+use App\Traits\ManageArticle;
 use App\Traits\ManageCategory;
-
 
 class ArticleController extends Controller
 {
     use ArticleValidation;
     use ManageCategory;
+    use ManageArticle;
     /**
      * Display a listing of the resource.
      *
@@ -50,12 +51,7 @@ class ArticleController extends Controller
                 ->withInput();
         }
 
-        Article::create([
-            'category_id' => $request->articlecategory,
-            'title' => $request->title,
-            'description' => $request->description,
-            'content' => $request->content
-        ]);
+        $this->insertNewArticle($request);
 
         return redirect(route('articles.index'))->with('message', 'New article inserted succesfully');
     }
