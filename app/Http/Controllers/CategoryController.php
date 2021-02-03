@@ -6,9 +6,11 @@ use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Traits\ManageCategory;
 
 class CategoryController extends Controller
 {
+    use ManageCategory;
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +18,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = $this->getAllCategories();
         return view('categories.index', compact('categories'));
     }
 
@@ -38,16 +40,6 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'category' => 'required|min:3'
-        // ]);
-
-        // if ($validator->fails()) {
-        //     return redirect('categories/create')
-        //         ->withErrors($validator)
-        //         ->withInput();
-        // }
-
         Category::create([
             'name' => $request->category
         ]);
