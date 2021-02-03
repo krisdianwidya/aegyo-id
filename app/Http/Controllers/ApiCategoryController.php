@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CategoryRequest;
-use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Traits\CategoryValidation;
 use App\Traits\ManageCategory;
 
 class ApiCategoryController extends Controller
 {
+    use CategoryValidation;
     use ManageCategory;
 
     public function index()
@@ -20,9 +19,7 @@ class ApiCategoryController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'category' => 'required|min:3'
-        ]);
+        $validator = $this->validateCategory($request);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
