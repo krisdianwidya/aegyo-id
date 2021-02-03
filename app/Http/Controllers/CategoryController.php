@@ -89,9 +89,7 @@ class CategoryController extends Controller
                 ->withInput();
         }
 
-        $category->update([
-            'name' => $request->category
-        ]);
+        $this->updateCategory($request, $category);
 
         return redirect(route('categories.index'))->with('message', 'Category updated succesfully');
     }
